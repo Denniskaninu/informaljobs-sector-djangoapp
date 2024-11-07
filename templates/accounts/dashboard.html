@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% block title %} User Dashboard {% endblock %}
+{% block content %}
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <h1 class="animate-title display-4 py-5 text-dark">User Dashboard</h1>
+                <p class="animate-subtitle lead">Your gateway to exciting job opportunities!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
+
+<section id="dashboard" class="dashboard-section">
+    <div class="container">
+        <div class="welcome-card">
+            <div class="card-content">
+                <h2 class="welcome-text">Welcome back, <span class="highlight">{{ user.first_name }}</span>!</h2>
+                
+                {% if applications %}
+                <div class="applications-container">
+                    <p class="section-intro">Here are the roles you've applied for:</p>
+                    <div class="table-responsive">
+                        <table class="animated-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Job Title</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for application in applications %}
+                                <tr class="table-row">
+                                    <td>{{ application.id }}</td>
+                                    <td>{{ application.job }}</td>
+                                    <td>
+                                        <a class="animated-btn" href="{% url 'job' application.job_id %}">
+                                            <span class="btn-text">View Job</span>
+                                            <span class="btn-icon">→</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">🚀😏🙄😥</div>
+                    <p class="empty-state-text">No applications yet? Start exploring and apply for your dream job today!</p>
+                    <a href="" class="cta-button">Browse Jobs </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Animations */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+/* General Styles */
+.hero-section {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 4rem 0;
+    margin-bottom: 2rem;
+}
+
+.animate-title {
+    animation: slideInLeft 1s ease-out;
+    color: #2d3436;
+    font-weight: 700;
+}
+
+.animate-subtitle {
+    animation: fadeIn 1s ease-out 0.5s both;
+    color: #636e72;
+}
+
+.welcome-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 2rem;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.card-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.welcome-text {
+    color: #2d3436;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    animation: slideInLeft 0.8s ease-out;
+}
+
+.highlight {
+    color: #0984e3;
+    font-weight: 600;
+}
+
+/* Table Styles */
+.animated-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+    margin-top: 1rem;
+}
+
+.animated-table thead th {
+    background-color: #f5f6fa;
+    padding: 1rem;
+    color: #2d3436;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.table-row {
+    animation: fadeIn 0.5s ease-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+}
+
+.table-row:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.table-row td {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+}
+
+/* Button Styles */
+.animated-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: #0984e3;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.animated-btn:hover {
+    background: #0573c7;
+    transform: translateX(5px);
+}
+
+.btn-icon {
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.animated-btn:hover .btn-icon {
+    transform: translateX(3px);
+}
+
+/* Empty State Styles */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    animation: fadeIn 1s ease-out;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: bounce 2s infinite;
+}
+
+.empty-state-text {
+    color: #636e72;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #0984e3;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.cta-button:hover {
+    background: #0573c7;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .welcome-text {
+        font-size: 1.5rem;
+    }
+    
+    .empty-state {
+        padding: 2rem 1rem;
+    }
+    
+    .animated-table {
+        font-size: 0.9rem;
+    }
+}
+</style>
+
+{% endblock %}

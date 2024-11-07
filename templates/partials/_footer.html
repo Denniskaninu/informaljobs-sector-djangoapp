@@ -1,0 +1,270 @@
+{% load static %}
+<footer class="custom-footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Company Info -->
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="footer-info">
+                        <h3 class="footer-brand">Informal<em>Jobs</em>Portal</h3>
+                        <p class="footer-desc">Connecting people with informal job opportunities and making a difference in communities.</p>
+                        <div class="social-links mt-4">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'jobs' %}">Find Jobs</a></li>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li> 
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-md-4">
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Moi avenue, Thika, Kenya</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@informaljobs.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+254 710996532</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="copyright">
+                        © {% now "Y" %} InformalJobs Portal. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <ul class="terms-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+.custom-footer {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding-top: 3rem;
+    position: relative;
+}
+
+.footer-top {
+    padding-bottom: 2rem;
+}
+
+.footer-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    -webkit-text-fill-color: transparent;
+}
+
+.footer-brand em {
+    font-style: normal;
+    color: #3498db;
+}
+
+.footer-desc {
+    color: #bdc3c7;
+    line-height: 1.6;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background: rgba(236, 240, 241, 0.1);
+    color: #ecf0f1;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: #3498db;
+    color: white;
+    transform: translateY(-3px);
+}
+
+.footer-title {
+    color: #ecf0f1;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background: #3498db;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: #3498db;
+    transform: translateX(5px);
+}
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-contact li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #bdc3c7;
+}
+
+.footer-contact li i {
+    width: 25px;
+    color: #3498db;
+    margin-right: 10px;
+}
+
+.footer-bottom {
+    background: #243342;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+}
+
+.copyright {
+    color: #bdc3c7;
+    margin: 0;
+}
+
+.terms-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+}
+
+.terms-links a {
+    color: #bdc3c7;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.terms-links a:hover {
+    color: #3498db;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .terms-links {
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+
+    .footer-info, .footer-links, .footer-contact {
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .footer-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .footer-contact li {
+        justify-content: center;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer-info, .footer-links, .footer-contact {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.footer-links {
+    animation-delay: 0.2s;
+}
+
+.footer-contact {
+    animation-delay: 0.4s;
+}
+</style>

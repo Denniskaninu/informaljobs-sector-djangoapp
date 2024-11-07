@@ -1,0 +1,112 @@
+#header {
+  height: 60px;
+  background: #42104e;
+  color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+#header:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#branding h1 {
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-in;
+}
+
+a:link,
+a:visited {
+  color: #214886;
+  transition: color 0.3s ease, transform 0.2s ease;
+  position: relative;
+}
+
+a:hover {
+  color: #2c5eaf;
+  transform: translateX(2px);
+}
+
+div.breadcrumbs {
+  background: #96739b;
+  color: #214886;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+div.breadcrumbs:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+div.breadcrumbs a {
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+div.breadcrumbs a:hover {
+  color: #000;
+}
+
+.module h2, .module caption, .inline-group h2 {
+  background: #96739b;
+  border-radius: 4px 4px 0 0;
+  transition: background-color 0.3s ease;
+}
+
+.module h2:hover, .module caption:hover, .inline-group h2:hover {
+  background: #a784ac;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+  background: #214886;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover {
+  background: #2c5eaf;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(33, 72, 134, 0.2);
+}
+
+.button:active, input[type=submit]:active, input[type=button]:active, .submit-row input:active, a.button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(33, 72, 134, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Add a subtle pulse animation to important buttons */
+.submit-row input[type="submit"] {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+      box-shadow: 0 0 0 0 rgba(33, 72, 134, 0.4);
+  }
+  70% {
+      box-shadow: 0 0 0 10px rgba(33, 72, 134, 0);
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba(33, 72, 134, 0);
+  }
+}

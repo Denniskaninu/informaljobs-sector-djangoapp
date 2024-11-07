@@ -1,0 +1,220 @@
+/* Base animations */
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideIn {
+	from { transform: translateX(-100%); }
+	to { transform: translateX(0); }
+  }
+  
+  @keyframes pulse {
+	0% { transform: scale(1); }
+	50% { transform: scale(1.05); }
+	100% { transform: scale(1); }
+  }
+  
+  @keyframes borderFlow {
+	0% { border-color: #7532f1; }
+	50% { border-color: #9b67f3; }
+	100% { border-color: #7532f1; }
+  }
+  
+  /* Enhance existing styles with animations */
+  body {
+	font-family: 'Poppins', sans-serif;
+	overflow-x: hidden;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Animated navigation */
+  .navbar .navbar-nav a.nav-link {
+	text-transform: capitalize;
+	font-size: 15px;
+	font-weight: 500;
+	letter-spacing: 0.5px;
+	color: #fff;
+	transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+	margin-top: 5px;
+	position: relative;
+  }
+  
+  .navbar .navbar-nav a.nav-link::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 3px;
+	background: #7532f1;
+	transition: all 0.3s ease;
+	transform: translateX(-50%);
+  }
+  
+  .navbar .navbar-nav .nav-link:hover::after,
+  .navbar .navbar-nav .active>.nav-link::after {
+	width: 100%;
+  }
+  
+  /* Enhanced buttons */
+  a.filled-button {
+	background-color: #7532f1;
+	color: #fff;
+	font-size: 14px;
+	text-transform: capitalize;
+	font-weight: 300;
+	padding: 10px 20px;
+	border-radius: 5px;
+	display: inline-block;
+	transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+	position: relative;
+	overflow: hidden;
+  }
+  
+  a.filled-button::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	transition: width 0.6s, height 0.6s;
+  }
+  
+  a.filled-button:hover::after {
+	width: 300px;
+	height: 300px;
+  }
+  
+  /* Animated product items */
+  .product-item {
+	border: 1px solid #eee;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	transition: all 0.3s ease;
+	animation: fadeIn 0.6s ease-out;
+  }
+  
+  .product-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-item img {
+	width: 100%;
+	overflow: hidden;
+	transition: transform 0.5s ease;
+  }
+  
+  .product-item:hover img {
+	transform: scale(1.05);
+  }
+  
+  /* Social icons animation */
+  ul.social-icons li a {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	line-height: 50px;
+	background-color: #eee;
+	color: #121212;
+	font-size: 18px;
+	text-align: center;
+	transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  
+  ul.social-icons li a:hover {
+	background-color: #7532f1;
+	color: #fff;
+	transform: translateY(-3px) rotate(5deg);
+  }
+  
+  /* Banner animations */
+  .banner-item {
+	position: relative;
+	overflow: hidden;
+  }
+  
+  .banner-item::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.4);
+	transition: all 0.3s ease;
+  }
+  
+  .banner-item:hover::before {
+	background: rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Service item animations */
+  .service-item {
+	text-align: center;
+	margin-bottom: 30px;
+	transition: all 0.3s ease;
+  }
+  
+  .service-item:hover {
+	transform: translateY(-10px);
+  }
+  
+  .service-item .icon i {
+	transition: all 0.4s ease;
+  }
+  
+  .service-item:hover .icon i {
+	transform: rotate(360deg);
+  }
+  
+  /* Form elements animation */
+  .contact-form .form-control {
+	transition: all 0.3s ease;
+	border: 2px solid transparent;
+  }
+  
+  .contact-form .form-control:focus {
+	border-color: #7532f1;
+	box-shadow: 0 0 15px rgba(117, 50, 241, 0.1);
+	transform: translateY(-2px);
+  }
+  
+  /* Section heading animations */
+  .section-heading {
+	position: relative;
+	animation: slideIn 0.8s ease-out;
+  }
+  
+  .section-heading::after {
+	content: '';
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+	width: 50px;
+	height: 3px;
+	background: #7532f1;
+	transition: all 0.3s ease;
+  }
+  
+  .section-heading:hover::after {
+	width: 100px;
+  }
+  
+  /* Responsive animations */
+  @media (max-width: 768px) {
+	.product-item:hover {
+	  transform: translateY(-3px);
+	}
+	
+	.service-item:hover {
+	  transform: translateY(-5px);
+	}
+  }

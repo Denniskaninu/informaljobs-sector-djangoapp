@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+{% block title %} Welcome {% endblock %}
+{% load humanize %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Banner and Search Styles */
+.banner {
+  padding: 40px 0;
+  background-image: url('https://plus.unsplash.com/premium_photo-1682146891912-6bc7768da82e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static "img/banner-bg.jpg" %}');
+  background-size: cover;
+  background-position: center;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+}
+
+.home-search {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.search-container {
+  padding: 20px;
+}
+
+.form-control-lg, .form-select-lg, .btn-lg {
+  height: 50px;
+  font-size: 16px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-select {
+  padding-right: 2.5rem;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+}
+
+.btn-search {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: all 0.3s ease;
+  color: white;
+  width: 100%;
+}
+
+.btn-search:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Featured Jobs Styles */
+.latest-products {
+  padding: 50px 0;
+  background: #f8f9fa;
+}
+
+.product-item {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+  transition: transform 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+}
+
+.product-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.down-content {
+  padding: 20px;
+}
+
+.down-content h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.down-content h6 {
+  color: #007bff;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.down-content small {
+  color: #666;
+  display: block;
+  line-height: 1.6;
+}
+
+/* About Section Styles */
+.services {
+  padding: 50px 0;
+  background-color: white;
+}
+
+.best-features {
+  padding: 30px 0;
+}
+
+.section-heading h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.section-heading h2:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: #007bff;
+}
+
+.filled-button {
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.filled-button:hover {
+  background: #0056b3;
+  color: white;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .banner {
+    min-height: 300px;
+  }
+  
+  .home-search {
+    padding: 15px !important;
+  }
+  
+  .search-container {
+    padding: 10px;
+  }
+  
+  .form-control-lg, .form-select-lg, .btn-lg {
+    height: 45px;
+    font-size: 14px;
+  }
+  
+  .section-heading h2 {
+    font-size: 24px;
+  }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Banner Starts Here -->
+<div class="banner">
+  <div class="container">
+    <div class="home-search">
+      <h1 class="display-4 mb-4 text-center" id="showcase-info">
+        Find Your Next Job Opportunity in Kenya
+      </h1>
+      <div class="search-container">
+        <form action="{% url 'search' %}" method="GET" class="search-form">
+          <div class="row g-3">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+              <div class="form-group">
+                <input 
+                  type="text" 
+                  name="role" 
+                  class="form-control form-control-lg" 
+                  placeholder="Role (e.g., Driver, Cleaner)"
+                  aria-label="Job Role">
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+              <div class="form-group">
+                <select name="location" class="form-select form-select-lg" aria-label="Location Select">
+                  <option value="">Select Location</option>
+                  {% for key, value in location_choices.items %}
+                    <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+              <div class="form-group">
+                <select name="contract" class="form-select form-select-lg" aria-label="Job Type Select">
+                  <option value="">Select Job Type</option>
+                  {% for key, value in contract_choices.items %}
+                    <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+              <button type="submit" class="btn btn-lg btn-search">
+                <i class="fa fa-search"></i> Search Jobs
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Alerts -->
+<div class="container mt-3">
+  {% include 'partials/_alerts.html' %}
+</div>
+
+<!-- Featured Jobs -->
+<div class="latest-products">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>Featured Jobs</h2>
+        </div>
+      </div>
+
+      {% if jobs %}
+        {% for job in jobs %}
+          <div class="col-md-4">
+            <div class="product-item">
+              <a href="{% url 'job' job.id %}">
+                <img src="{{ job.main_image.url }}" alt="{{ job.title }}" class="img-fluid">
+              </a>
+              <div class="down-content">
+                <a href="{% url 'job' job.id %}">
+                  <h4>{{ job.title }}</h4>
+                </a>
+                <h6>Ksh {{ job.salary | intcomma }}</h6>
+                <small>
+                  <i class="fa fa-briefcase"></i> {{ job.role }} <br>
+                  <i class="fa fa-calendar"></i> Apply by {{ job.deadline | date:"F d Y" }} <br>
+                  <i class="fa fa-map-marker"></i> {{ job.location }}
+                </small>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-md-12">
+          <div class="alert alert-info">
+            No jobs found! Please check back soon or try a different search.
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- About Section -->
+<div class="services">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="section-heading">
+          <h2>About Us</h2>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="left-content">
+          <p>We connect job seekers with informal work opportunities across Kenya. Our platform is designed to serve everyone, 
+            from those new to the workforce to those seeking flexible roles.</p>
+          <p>By focusing on digital inclusion and creating economic opportunities in every part of Kenya,
+           we aim to uplift communities and foster growth. 
+          Our commitment extends beyond job matching, as we prioritize diversity, sustainability, and community support.</p>
+          <a href="{% url 'about' %}" class="filled-button">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="right-image">
+          <img src="{% static 'img/about-image.jpg' %}" alt="About Us" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Form validation
+    const searchForm = document.querySelector('.search-form');
+    const roleInput = searchForm.querySelector('input[name="role"]');
+    const locationSelect = searchForm.querySelector('select[name="location"]');
+    const contractSelect = searchForm.querySelector('select[name="contract"]');
+
+    searchForm.addEventListener('submit', function(e) {
+        // Reset any previous error styles
+        [roleInput, locationSelect, contractSelect].forEach(el => {
+            el.classList.remove('is-invalid');
+        });
+
+        let isValid = true;
+
+        // Basic validation
+        if (roleInput.value.trim() === '') {
+            roleInput.classList.add('is-invalid');
+            isValid = false;
+        }
+
+        if (locationSelect.value === '') {
+            locationSelect.classList.add('is-invalid');
+            isValid = false;
+        }
+
+        if (contractSelect.value === '') {
+            contractSelect.classList.add('is-invalid');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+            alert('Please fill in all search fields');
+        }
+    });
+
+    // Remove invalid class on input/change
+    [roleInput, locationSelect, contractSelect].forEach(el => {
+        el.addEventListener('input', function() {
+            this.classList.remove('is-invalid');
+        });
+        el.addEventListener('change', function() {
+            this.classList.remove('is-invalid');
+        });
+    });
+});
+</script>
+{% endblock %}

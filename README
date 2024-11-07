@@ -1,0 +1,29 @@
+A web application designed to connect job seekers in Kenya's informal sector with potential employers. 
+Kazi hub aims to provide a platform for people seeking informal work opportunities—such as manual labor, 
+domestic work, and other essential services—to find jobs easily and reliably, 
+helping to bridge the gap between employers and the skilled, 
+unskilled, or semi-skilled workforce in Ken
+
+Features
+User Registration and Authentication: Secure sign-up and login for both job seekers and employers.
+
+
+Job Listings: Employers can post available jobs, specifying required skills, location, and compensation.
+
+Search and Filtering: Job seekers can search for jobs based on location, job type, and pay range.
+
+Profile Management: Both job seekers and employers can create and manage detailed profiles.
+
+Job Applications: Job seekers can apply for jobs and communicate with employers directly.
+
+Real-Time Notifications: Notifications for job applications, approvals, and other important events.
+
+Admin Dashboard: Admin users have access to a dashboard to manage users, jobs, and overall app activity.
+
+Tech Stack
+Backend: Django (Python)
+Frontend: HTML, CSS, JavaScript, Django Templates
+Database: SQLite (for development), PostgreSQL/MySQL (for production)
+Hosting: Heroku/AWS/Any preferred cloud service
+Version Control: Git and GitHub
+

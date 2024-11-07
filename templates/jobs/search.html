@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+{% block title %} Search Results {% endblock %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+
+<!-- Banner Section -->
+<div class="banner header-text position-relative" style="background-image: url(''); min-height: 400px; background-color: #f8f9fa;">
+    <div class="banner-item py-5">
+        <div class="container">
+            <div class="home-search bg-white rounded-lg shadow-sm p-4 p-md-5">
+                <h1 class="display-4 mb-4 text-primary font-weight-bold" id="showcase-info">
+                    Find Your Next Great Role
+                </h1>
+                <div class="search">
+                    <!-- Modified form to properly handle GET request -->
+                    <form action="{% url 'search' %}" method="GET">
+                        <div class="row g-3">
+                            <!-- Role Search Input -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
+                                <div class="form-group">
+                                    <label class="form-label" for="role-input">Role</label>
+                                    <input type="text" 
+                                           id="role-input" 
+                                           name="role" 
+                                           class="form-control form-control-lg" 
+                                           placeholder="e.g., Cleaner, Driver" 
+                                           value="{{ request.GET.role }}">
+                                </div>
+                            </div>
+
+                            <!-- Location Select -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
+                                <div class="form-group">
+                                    <label class="form-label" for="location-select">Location</label>
+                                    <select id="location-select" name="location" class="form-control form-control-lg">
+                                        <option value="">Select Location</option>
+                                        {% for key, value in location_choices.items %}
+                                            <option value="{{ key }}"
+                                                {% if key == request.GET.location %}selected{% endif %}>
+                                                {{ value }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Contract/Job Type Select -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
+                                <div class="form-group">
+                                    <label class="form-label" for="contract-select">Job Type</label>
+                                    <select id="contract-select" name="contract" class="form-control form-control-lg">
+                                        <option value="">Select Job Type</option>
+                                        {% for key, value in contract_choices.items %}
+                                            <option value="{{ key }}"
+                                                {% if key == request.GET.contract %}selected{% endif %}>
+                                                {{ value }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Search Button -->
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                                <button type="submit" class="btn btn-primary btn-lg w-100 text-white btn-search" onclick="showLoader()">
+                                    <i class="fa fa-search me-2"></i>Search Job
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Job Listings Section -->
+<div class="latest-products py-5 bg-light">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3 class="text-muted">
+                    Found {{ jobs|length }} Job{{ jobs|length|pluralize:",s" }}
+                </h3>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            {% if jobs %}
+                {% for job in jobs %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="product-item bg-white rounded-lg shadow-sm h-100 transition-hover">
+                        <a href="{% url 'job' job.id %}" class="d-block">
+                            <img src="{{ job.main_image.url|default:'path/to/default_image.jpg' }}" alt="{{ job.title }}" class="img-fluid rounded-top">
+                        </a>
+                        <div class="down-content p-4">
+                            <a href="{% url 'job' job.id %}" class="text-decoration-none">
+                                <h4 class="text-primary mb-2">{{ job.title }}</h4>
+                            </a>
+                            <h6 class="text-success mb-3">Ksh {{ job.salary | intcomma }}</h6>
+                            <div class="job-meta mb-3">
+                                <p class="mb-2">
+                                    <i class="fa fa-briefcase text-muted me-2"></i> {{ job.role }}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fa fa-building text-muted me-2"></i> {{ job.company }}
+                                </p>
+                            </div>
+                            <div class="job-details">
+                                <p class="mb-2">
+                                    <i class="fa fa-calendar text-muted me-2"></i> 
+                                    Apply by {{ job.deadline | date:"F d Y" }}
+                                </p>
+                                <p class="mb-2">
+                                    <i class="fa fa-file text-muted me-2"></i> {{ job.contract }}
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fa fa-map-marker text-muted me-2"></i> {{ job.location }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center py-4">
+                        <i class="fa fa-info-circle me-2"></i>No jobs found! Try adjusting your search criteria.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<script>
+    function showLoader() {
+        const btn = document.querySelector('.btn-search');
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i>Searching...';
+    }
+</script>
+
+<style>
+/* Animations and styling */
+
+.product-item {
+    transition: all 0.3s ease-in-out;
+    border: 1px solid transparent;
+    overflow: hidden;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    border-color: #007bff;
+}
+
+.product-item a img {
+    transition: transform 0.5s ease;
+}
+
+.product-item:hover a img {
+    transform: scale(1.05);
+}
+
+.job-meta i, .job-details i {
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover .job-meta i,
+.product-item:hover .job-details i {
+    transform: translateX(5px);
+    color: #007bff !important;
+}
+
+.btn-search {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-search:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+.btn-search:hover:before {
+    left: 100%;
+}
+
+.form-control {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.form-control:focus {
+    transform: translateY(-2px);
+    border-color: #007bff;
+    box-shadow: 0 5px 15px rgba(0,123,255,0.1);
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0,123,255,0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0,123,255,0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0,123,255,0);
+    }
+}
+
+.btn-search:hover {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-item {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.product-item:nth-child(1) { animation-delay: 0.1s; }
+.product-item:nth-child(2) { animation-delay: 0.2s; }
+.product-item:nth-child(3) { animation-delay: 0.3s; }
+.product-item:nth-child(4) { animation-delay: 0.4s; }
+.product-item:nth-child(5) { animation-delay: 0.5s; }
+.product-item:nth-child(6) { animation-delay: 0.6s; }
+
+.text-success {
+    position: relative;
+    overflow: hidden;
+}
+
+.text-success:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255,255,255,0.3);
+    transition: 0.5s;
+}
+
+.text-success:hover:after {
+    left: 100%;
+}
+</style>

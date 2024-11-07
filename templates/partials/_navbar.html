@@ -1,0 +1,253 @@
+{% load static %}
+<!-- Header -->
+<header class="sticky-top">
+  <nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container">
+      <!-- Logo -->
+      <a class="navbar-brand brand-animate" href="{% url 'index' %}">
+        <h2 class="m-0">
+          <span class="brand-text">Informal</span>
+          <em class="brand-highlight">Jobs</em>
+          <span class="brand-text">Portal</span>
+        </h2>
+      </a>
+
+      <!-- Mobile Toggle -->
+      <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Nav Items -->
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item {% if '/' == request.path %}active{% endif %}">
+            <a class="nav-link hover-underline" href="{% url 'index' %}">
+              <span class="nav-text">HOME</span>
+            </a>
+          </li>
+
+          <li class="nav-item {% if 'about' in request.path %}active{% endif %}">
+            <a class="nav-link hover-underline" href="{% url 'about' %}">
+              <span class="nav-text">ABOUT</span>
+            </a>
+          </li>
+
+          <li class="nav-item {% if 'jobs' in request.path %}active{% endif %}">
+            <a class="nav-link hover-underline" href="{% url 'jobs' %}">
+              <span class="nav-text">JOBS</span>
+            </a>
+          </li>
+
+          {% if user.is_authenticated %}
+            <li class="nav-item {% if 'dashboard' in request.path %}active{% endif %}">
+              <a class="nav-link hover-underline" href="{% url 'dashboard' %}">
+                <span class="nav-text">
+                  <i class="fas fa-user-circle me-1"></i>
+                  {{ user.first_name|upper }} (DASHBOARD)
+                </span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link logout-btn">
+                <i class="fas fa-sign-out-alt me-1"></i> LOGOUT
+              </a>
+              <form action="{% url 'logout' %}" method="POST" id="logout">
+                {% csrf_token %}
+                <input type="hidden">
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item {% if 'login' in request.path %}active{% endif %}">
+              <a class="nav-link login-btn" href="{% url 'login' %}">
+                <i class="fas fa-sign-in-alt me-1"></i> LOGIN
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+/* Navbar Styles - With Better Contrast */
+.custom-navbar {
+    background: #2c3e50; /* Dark background */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    padding: 15px 0;
+}
+
+.brand-animate {
+    transition: transform 0.3s ease;
+}
+
+.brand-animate:hover {
+    transform: scale(1.05);
+}
+
+.brand-text {
+    color: #ffffff; /* White text */
+    font-weight: 600;
+}
+
+.brand-highlight {
+    color: #3498db; /* Bright blue */
+    font-style: normal;
+    font-weight: 700;
+}
+
+.nav-link {
+    position: relative;
+    padding: 8px 15px !important;
+    margin: 0 5px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #ecf0f1 !important; /* Light gray text */
+}
+
+.nav-link:hover {
+    color: #3498db !important; /* Bright blue on hover */
+}
+
+.hover-underline::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #3498db;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover .hover-underline::after,
+.active .nav-link {
+    width: 80%;
+    color: #3498db !important;
+}
+
+.active .nav-link {
+    color: #3498db !important;
+}
+
+.login-btn, .logout-btn {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white !important;
+    border-radius: 25px;
+    padding: 8px 20px !important;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover, .logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    background: linear-gradient(45deg, #2980b9, #3498db);
+}
+
+.custom-toggler {
+    border: none;
+    padding: 4px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    background-color: rgba(236, 240, 241, 0.1);
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(236, 240, 241, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.custom-toggler:hover {
+    background-color: rgba(236, 240, 241, 0.2);
+}
+
+/* Animation for nav items */
+.navbar-nav .nav-item {
+    opacity: 0;
+    animation: fadeInNav 0.5s ease forwards;
+}
+
+@keyframes fadeInNav {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animation with delay to each nav item */
+.navbar-nav .nav-item:nth-child(1) { animation-delay: 0.1s; }
+.navbar-nav .nav-item:nth-child(2) { animation-delay: 0.2s; }
+.navbar-nav .nav-item:nth-child(3) { animation-delay: 0.3s; }
+.navbar-nav .nav-item:nth-child(4) { animation-delay: 0.4s; }
+.navbar-nav .nav-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* Scroll behavior */
+.navbar.scrolled {
+    padding: 10px 0;
+    background: #243342; /* Slightly darker when scrolled */
+}
+
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        padding: 20px 0;
+        background: #2c3e50;
+    }
+    
+    .nav-link {
+        padding: 10px 15px !important;
+        margin: 5px 0;
+    }
+    
+    .login-btn, .logout-btn {
+        display: inline-block;
+        margin-top: 10px;
+    }
+    
+    .navbar-collapse {
+        background: #2c3e50;
+        border-radius: 8px;
+        padding: 10px;
+        margin-top: 10px;
+    }
+}
+</style>
+
+<script>
+// Add scroll behavior
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.custom-navbar');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Add ripple effect to buttons
+    const buttons = document.querySelectorAll('.login-btn, .logout-btn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            let x = e.clientX - e.target.offsetLeft;
+            let y = e.clientY - e.target.offsetTop;
+            
+            let ripple = document.createElement('span');
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+});
+</script>
