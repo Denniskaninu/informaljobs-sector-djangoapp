@@ -1,29 +1,39 @@
-A web application designed to connect job seekers in Kenya's informal sector with potential employers. 
-Kazi hub aims to provide a platform for people seeking informal work opportunities—such as manual labor, 
-domestic work, and other essential services—to find jobs easily and reliably, 
-helping to bridge the gap between employers and the skilled, 
-unskilled, or semi-skilled workforce in Ken
+# 🚀 Job Portal Project
 
-Features
-User Registration and Authentication: Secure sign-up and login for both job seekers and employers.
+Welcome to the **Job Portal Project**! This is a Django-based web application designed to connect individuals with job opportunities, especially in manual labor and informal sectors. The platform includes essential modules for user management, job listings, job applications, and communication.
 
+---
 
-Job Listings: Employers can post available jobs, specifying required skills, location, and compensation.
+## 🏗️ Project Structure
 
-Search and Filtering: Job seekers can search for jobs based on location, job type, and pay range.
+The project follows a modular structure with the following key components:
 
-Profile Management: Both job seekers and employers can create and manage detailed profiles.
+- **accounts**: Handles user authentication, registration, and management.
+- **jobs**: Manages job listings, categories, and job details.
+- **applications**: Manages job applications, including tracking and status updates.
+- **contacts**: Facilitates communication between users and job providers.
+- **pages**: Static content such as the home page, about, and contact information.
 
-Job Applications: Job seekers can apply for jobs and communicate with employers directly.
+---
 
-Real-Time Notifications: Notifications for job applications, approvals, and other important events.
+## 📋 Requirements
 
-Admin Dashboard: Admin users have access to a dashboard to manage users, jobs, and overall app activity.
+- Python 3.x
+- Django 5.1.2
+- PostgreSQL or SQLite (default)
 
-Tech Stack
-Backend: Django (Python)
-Frontend: HTML, CSS, JavaScript, Django Templates
-Database: SQLite (for development), PostgreSQL/MySQL (for production)
-Hosting: Heroku/AWS/Any preferred cloud service
-Version Control: Git and GitHub
+---
+
+## 🚀 Installation
+
+ **Clone the repository**:
+
+   ```bash
+   git clone 
+   cd job_portal
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+
 
